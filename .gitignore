@@ -9,6 +9,9 @@
 # Environments
 venv/
 
+# downloaded zipfile
+*.zip
+
 # Node artifact files
 node_modules/
 dist/

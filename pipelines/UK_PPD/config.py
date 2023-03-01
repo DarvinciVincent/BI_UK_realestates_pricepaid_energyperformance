@@ -7,7 +7,8 @@ from pipelines.UK_EPC.config import OUTPUT_DATA as EPC_OUTPUT_DATA
 load_dotenv()
 
 ### MYSQL
-MYSQL_HOST = os.getenv("POSTGRES_HOST")
+MYSQL_USERNAME = str(os.getenv("MYSQL_USERNAME"))
+MYSQL_PASSWORD = str(os.getenv("MYSQL_PASSWORD"))
 
 
 # RUNTIME CONFIGURATIONS
@@ -150,14 +151,32 @@ COLUMN_TYPES = {"price_paid":  {"transactionid": "string",
 NAN_PATTERNS = ["N/A", "NaN", "nan", "unknown", "UNKNOWN", "Unknown", "INVALID!", "NODATA!", "NO DATA!", ""]
 
 # OUTPUT_DATA -> connection -> output_table_name -> bucket, country, subject, source, table_name, path_date_params, file_extension, column_types
-OUTPUT_DATA = {"MYSQL": {"price_paid": {"column_types": COLUMN_TYPES["price_paid"]
+OUTPUT_DATA = {"MYSQL": {"price_paid": {"table_name": "price_paid",
+                                        "host":  "localhost",  
+                                        "port": 3306, 
+                                        "database": "ppd_epc",
+                                        "username": MYSQL_USERNAME,
+                                        "password": MYSQL_PASSWORD,
+                                        "column_types": COLUMN_TYPES["price_paid"]
                                         },
                       
-                        "pricepaid_to_residential_epc":  {"column_types": COLUMN_TYPES["pricepaid_to_residential_epc"]
-                                                            },
+                        "pricepaid_to_residential_epc": {"table_name": "pricepaid_to_residential_epc",
+                                                        "host":  "localhost",  
+                                                        "port": 3306, 
+                                                        "database": "ppd_epc",
+                                                        "username": MYSQL_USERNAME,
+                                                        "password": MYSQL_PASSWORD,
+                                                        "column_types": COLUMN_TYPES["pricepaid_to_residential_epc"]
+                                                        },
                         
-                        "pricepaid_enriched_with_residential_epc":   {"column_types": COLUMN_TYPES["pricepaid_enriched_with_residential_epc"]
-                                                                        },
+                        "pricepaid_enriched_with_residential_epc": {"table_name": "pricepaid_enriched_with_residential_epc",
+                                                                    "host":  "localhost",  
+                                                                    "port": 3306, 
+                                                                    "database": "ppd_epc",
+                                                                    "username": MYSQL_USERNAME,
+                                                                    "password": MYSQL_PASSWORD,
+                                                                    "column_types": COLUMN_TYPES["pricepaid_enriched_with_residential_epc"]
+                                                                    },
                         }
                 }
 
