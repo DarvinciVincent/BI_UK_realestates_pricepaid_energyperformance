@@ -11,6 +11,10 @@ MYSQL_HOST = os.getenv("POSTGRES_HOST")
 ### EPC API
 EPC_API_CREDENTIALS = str(os.getenv("UK_EPC_API_AUTHENTICATION_TOKEN"))
 
+### MYSQL
+MYSQL_USERNAME = str(os.getenv("MYSQL_USERNAME"))
+MYSQL_PASSWORD = str(os.getenv("MYSQL_PASSWORD"))
+
 # RUNTIME CONFIGURATIONS
 
 ## EPC data is available from this year and month
@@ -22,7 +26,7 @@ COLUMN_TYPES = {"residential_building_epc_certificate": {"lmk_key": "string",
                                                         "address2": "string",
                                                         "address3": "string",
                                                         "postcode": "string",
-                                                        "building_reference_number": int,
+                                                        "building_reference_number": "string",
                                                         "current_energy_rating": "string",
                                                         "potential_energy_rating": "string",
                                                         "current_energy_efficiency": float,
@@ -453,8 +457,7 @@ EPC_LOCAL_AUTHORITIES = {"Adur": "E07000223",
                          "Wycombe": "E07000007",
                          "Wyre": "E07000128",
                          "Wyre Forest": "E07000239",
-                         "York": "E06000014",
-                         "[Unknown Local Authority]": "_unknown_local_authority",
+                         "York": "E06000014"
                         }
 
 NAN_PATTERNS = ["N/A", "NaN", "nan", "unknown", "UNKNOWN", "Unknown", "INVALID!", "NODATA!", "NO DATA!", ""]
@@ -498,7 +501,13 @@ FLOOR_LEVEL_PATTERNS = {r'^ground floor$': 'ground',
                         }
 
 # OUTPUT_DATA -> platform -> output_table_name -> bucket, country, subject, source, table_name, path_date_params, file_extension, column_types
-OUTPUT_DATA =  {"MYSQL": {"residential_building_epc_certificate": {"column_types": COLUMN_TYPES["residential_building_epc_certificate"]
+OUTPUT_DATA =  {"MYSQL": {"residential_building_epc_certificate": {"table_name": "residential_building_epc_certificate",
+                                                                    "host":  "localhost",  
+                                                                    "port": 3306, 
+                                                                    "database": "ppd_epc",
+                                                                    "username": MYSQL_USERNAME,
+                                                                    "password": MYSQL_PASSWORD,
+                                                                    "column_types": COLUMN_TYPES["residential_building_epc_certificate"]
                                                                     }
                             }
                 }

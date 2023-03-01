@@ -9,7 +9,8 @@ import pandas as pd
 import numpy as np
 import logging
 import requests
-
+from sqlalchemy import create_engine
+import mysql
 
 # Define global variables
 OUTPUT_TABLE_NAME = "residential_building_epc_certificate"
@@ -94,8 +95,7 @@ def ETL_extract_epc(from_year: int=None, to_year: int=None):
         min_month = None
         max_month = None
         logging.info(f"Started processing for {from_year} to {to_year}.")
-    
-    epc_y = pd.DataFrame(columns=list(PIPELINE_OUTPUT["column_types"].keys()))
+
     for year in range(from_year, to_year + 1):
         epc_y = pd.DataFrame(columns=list(PIPELINE_OUTPUT["column_types"].keys()))
         if min_month is None or max_month is None:
@@ -130,7 +130,8 @@ def ETL_extract_epc(from_year: int=None, to_year: int=None):
         
         # Load: Load to MySQL database
         #TODO
-
+        mydb = create_engine('mysql+mysqlconnector://' + PIPELINE_OUTPUT["username"] + ':' + PIPELINE_OUTPUT["password"] + '@' + PIPELINE_OUTPUT["host"] + ':' + str(PIPELINE_OUTPUT["port"]) + '/' + PIPELINE_OUTPUT["database"] , echo=False)
+        epc_y.to_sql(name=PIPELINE_OUTPUT["table_name"], con=mydb, if_exists = 'append', index=False)
 
     if from_year == to_year:
         logging.info(f"""Monthly update done for {from_year}.""")
@@ -141,7 +142,7 @@ def main():
     logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S %Z')
     
-    ETL_extract_epc(2022, 2022)
+    ETL_extract_epc(2023, 2023)
     
 
 if __name__ == "__main__":
