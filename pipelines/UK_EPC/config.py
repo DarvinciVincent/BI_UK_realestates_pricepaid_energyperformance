@@ -5,15 +5,12 @@ from dotenv import load_dotenv
 # ENVIRONMENT VARIABLES
 load_dotenv()
 
-### MYSQL
-MYSQL_HOST = os.getenv("POSTGRES_HOST")
+### DATABASE
+DB_URL = str(os.getenv("DB_URL"))
 
 ### EPC API
 EPC_API_CREDENTIALS = str(os.getenv("UK_EPC_API_AUTHENTICATION_TOKEN"))
 
-### MYSQL
-MYSQL_USERNAME = str(os.getenv("MYSQL_USERNAME"))
-MYSQL_PASSWORD = str(os.getenv("MYSQL_PASSWORD"))
 
 # RUNTIME CONFIGURATIONS
 
@@ -21,7 +18,7 @@ MYSQL_PASSWORD = str(os.getenv("MYSQL_PASSWORD"))
 EPC_MIN_YEAR = 2008
 EPC_MIN_MONTH = 10
 
-COLUMN_TYPES = {"residential_building_epc_certificate": {"lmk_key": "string",
+COLUMN_TYPES = {"residential_energy_performance_certificate": {"lmk_key": "string",
                                                         "address1": "string",
                                                         "address2": "string",
                                                         "address3": "string",
@@ -501,22 +498,18 @@ FLOOR_LEVEL_PATTERNS = {r'^ground floor$': 'ground',
                         }
 
 # OUTPUT_DATA -> platform -> output_table_name -> bucket, country, subject, source, table_name, path_date_params, file_extension, column_types
-OUTPUT_DATA =  {"MYSQL": {"residential_building_epc_certificate": {"table_name": "residential_building_epc_certificate",
-                                                                    "host":  "localhost",  
-                                                                    "port": 3306, 
-                                                                    "database": "ppd_epc",
-                                                                    "username": MYSQL_USERNAME,
-                                                                    "password": MYSQL_PASSWORD,
-                                                                    "column_types": COLUMN_TYPES["residential_building_epc_certificate"]
-                                                                    }
-                            }
+OUTPUT_DATA =  {"DB": {"residential_energy_performance_certificate": {"table_name": "residential_energy_performance_certificate",
+                                                            "db_schema": "linked_ppd_epc",
+                                                            "column_types": COLUMN_TYPES["residential_energy_performance_certificate"]
+                                                            }
+                      }
                 }
 
 # INPUT_DATA -> platform -> output_table_name -> platform-specific configs
-INPUT_DATA =  {"SOURCE": {"residential_building_epc_certificate":  {"endpoint_url": "https://epc.opendatacommunities.org/api/v1/domestic/search?",
-                                                                    "endpoint_headers": {"Accept": "application/json", "Authorization": EPC_API_CREDENTIALS},
-                                                                    "api_max_read_size": 5000,
-                                                                    "api_max_read_total": 10000
-                                                                    }
+INPUT_DATA =  {"SOURCE": {"residential_energy_performance_certificate":  {"endpoint_url": "https://epc.opendatacommunities.org/api/v1/domestic/search?",
+                                                                  "endpoint_headers": {"Accept": "application/json", "Authorization": EPC_API_CREDENTIALS},
+                                                                  "api_max_read_size": 5000,
+                                                                  "api_max_read_total": 10000
+                                                                  }
                            }
                }
