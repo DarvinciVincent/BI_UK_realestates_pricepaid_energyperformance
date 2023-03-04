@@ -4,31 +4,26 @@ from dotenv import load_dotenv
 # ENVIRONMENT VARIABLES
 load_dotenv()
 
-### MYSQL
-MYSQL_USERNAME = str(os.getenv("MYSQL_USERNAME"))
-MYSQL_PASSWORD = str(os.getenv("MYSQL_PASSWORD"))
+### DATABASE
+DB_URL = str(os.getenv("DB_URL"))
 
 
 # RUNTIME CONFIGURATIONS
 COLUMN_TYPES = {"unique_property_reference_number": {"uprn": "string",
-                                                     "x_coordinate": float,
-                                                     "y_coordinate": float,
-                                                     "latitude": float,
-                                                     "longitude": float
+                                                     "x_coordinate": "string",
+                                                     "y_coordinate": "string",
+                                                     "latitude": "string",
+                                                     "longitude": "string"
                                                      }
                 }
 
 NAN_PATTERNS = ["N/A", "NaN", "nan", "unknown", "UNKNOWN", "Unknown", "INVALID!", "NODATA!", "NO DATA!", ""]
 
 # OUTPUT_DATA -> connection -> output_table_name -> bucket, country, subject, source, table_name, path_date_params, file_extension, column_types
-OUTPUT_DATA =  {"MYSQL": {"unique_property_reference_number": {"table_name": "unique_property_reference_number",
-                                                                    "host":  "localhost",  
-                                                                    "port": 3306, 
-                                                                    "database": "ppd_epc",
-                                                                    "username": MYSQL_USERNAME,
-                                                                    "password": MYSQL_PASSWORD,
-                                                                    "column_types": COLUMN_TYPES["unique_property_reference_number"]
-                                                                    }
+OUTPUT_DATA =  {"DB": {"unique_property_reference_number": {"table_name": "unique_property_reference_number",
+                                                            "db_schema": "linked_ppd_epc",
+                                                            "column_types": COLUMN_TYPES["unique_property_reference_number"]
+                                                            }
                             }
                 }
 
