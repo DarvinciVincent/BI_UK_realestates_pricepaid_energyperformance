@@ -1,0 +1,6 @@
+# Environment directory
+venv/
+venv_win/
+
+# Logs
+*.log

@@ -1,12 +1,12 @@
 import importlib
 
 
-def main(pipeline_name, pipeline_stage):    
+def main(pipeline_name, pipeline_stage, *args):    
 
     pipeline_name = ".".join(["pipelines", pipeline_name, pipeline_stage])
     try:
         pipeline = importlib.import_module(pipeline_name)
-        pipeline.main()
+        pipeline.main(*args)
     except Exception as e:
         print(e)
 

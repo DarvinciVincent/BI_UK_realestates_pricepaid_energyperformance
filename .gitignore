@@ -3,12 +3,15 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
+# Temp data files
+*.csv
+
 # Credentials
 .env
 
 # Environments
 venv/
-
+venv_win/
 # downloaded zipfile
 *.zip
 
