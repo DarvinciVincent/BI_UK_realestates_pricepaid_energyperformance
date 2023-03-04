@@ -6,9 +6,8 @@ from pipelines.UK_EPC.config import OUTPUT_DATA as EPC_OUTPUT_DATA
 # ENVIRONMENT VARIABLES
 load_dotenv()
 
-### MYSQL
-MYSQL_USERNAME = str(os.getenv("MYSQL_USERNAME"))
-MYSQL_PASSWORD = str(os.getenv("MYSQL_PASSWORD"))
+### DATABASE
+DB_URL = str(os.getenv("DB_URL"))
 
 
 # RUNTIME CONFIGURATIONS
@@ -151,30 +150,18 @@ COLUMN_TYPES = {"price_paid":  {"transactionid": "string",
 NAN_PATTERNS = ["N/A", "NaN", "nan", "unknown", "UNKNOWN", "Unknown", "INVALID!", "NODATA!", "NO DATA!", ""]
 
 # OUTPUT_DATA -> connection -> output_table_name -> bucket, country, subject, source, table_name, path_date_params, file_extension, column_types
-OUTPUT_DATA = {"MYSQL": {"price_paid": {"table_name": "price_paid",
-                                        "host":  "localhost",  
-                                        "port": 3306, 
-                                        "database": "ppd_epc",
-                                        "username": MYSQL_USERNAME,
-                                        "password": MYSQL_PASSWORD,
+OUTPUT_DATA = {"DB":   {"price_paid":  {"table_name": "price_paid",
+                                        "db_schema": "linked_ppd_epc",
                                         "column_types": COLUMN_TYPES["price_paid"]
                                         },
                       
                         "pricepaid_to_residential_epc": {"table_name": "pricepaid_to_residential_epc",
-                                                        "host":  "localhost",  
-                                                        "port": 3306, 
-                                                        "database": "ppd_epc",
-                                                        "username": MYSQL_USERNAME,
-                                                        "password": MYSQL_PASSWORD,
-                                                        "column_types": COLUMN_TYPES["pricepaid_to_residential_epc"]
+                                                         "db_schema": "linked_ppd_epc",
+                                                         "column_types": COLUMN_TYPES["pricepaid_to_residential_epc"]
                                                         },
                         
                         "pricepaid_enriched_with_residential_epc": {"table_name": "pricepaid_enriched_with_residential_epc",
-                                                                    "host":  "localhost",  
-                                                                    "port": 3306, 
-                                                                    "database": "ppd_epc",
-                                                                    "username": MYSQL_USERNAME,
-                                                                    "password": MYSQL_PASSWORD,
+                                                                    "db_schema": "linked_ppd_epc",
                                                                     "column_types": COLUMN_TYPES["pricepaid_enriched_with_residential_epc"]
                                                                     },
                         }
@@ -189,14 +176,14 @@ INPUT_DATA = {"SOURCE": {"price_paid": {"endpoint_url_types": ["complete", "year
                                         }
                         },
 
-              "MYSQL": {"price_paid": OUTPUT_DATA["MYSQL"]["price_paid"],
+              "DB": {"price_paid": OUTPUT_DATA["DB"]["price_paid"],
                      
-                        "residential_building_epc_certificate": EPC_OUTPUT_DATA["MYSQL"]["residential_building_epc_certificate"],
+                        "residential_energy_performance_certificate": EPC_OUTPUT_DATA["DB"]["residential_energy_performance_certificate"],
 
-                        "pricepaid_to_residential_epc": OUTPUT_DATA["MYSQL"]["pricepaid_to_residential_epc"]
+                        "pricepaid_to_residential_epc": OUTPUT_DATA["DB"]["pricepaid_to_residential_epc"]
                         }
               }
 
 # Update params for INPUT_DATA
-INPUT_DATA["MYSQL"]["price_paid"]["needed_columns"] = ["transactionid", "postcode", "propertytype", "paon", "saon", "street", "locality"]
-INPUT_DATA["MYSQL"]["residential_building_epc_certificate"]["needed_columns"] = ["lmk_key", "address1", "address2", "address3", "postcode", "property_type", "address"]
+INPUT_DATA["DB"]["price_paid"]["needed_columns"] = ["transactionid", "postcode", "propertytype", "paon", "saon", "street", "locality"]
+INPUT_DATA["DB"]["residential_energy_performance_certificate"]["needed_columns"] = ["lmk_key", "address1", "address2", "address3", "postcode", "property_type", "address"]
