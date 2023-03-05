@@ -1,7 +1,7 @@
 -- This file is for importing price paid data
 
 
--- 1/ Create a pricepaid table if not exists
+-- Create table
 CREATE TABLE IF NOT EXISTS linked_ppd_epc.price_paid
 (
   transactionid text NOT NULL,
