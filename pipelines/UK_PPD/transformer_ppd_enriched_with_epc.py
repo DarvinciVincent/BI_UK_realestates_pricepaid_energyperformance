@@ -14,7 +14,7 @@ def ETL_ppd_enriched_with_rre_epc():
     mydb = db_func.connect_to_db(DB_URL)
 
     # Execute sql script to link data
-    db_func.execute_sql_from_file("sql/price_paid_enriched_with_epc.sql", mydb)
+    db_func.execute_sql_from_file("sql/transform_pricepaid_enriched_with_residential_epc.sql", mydb)
 
     # Disconnect from db
     db_func.disconnect_db(mydb)
