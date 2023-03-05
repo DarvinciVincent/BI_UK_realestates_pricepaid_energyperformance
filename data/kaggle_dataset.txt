@@ -1,0 +1,14 @@
+# Link to the dataset (view priviledge)
+https://kaggle.com/datasets/b83009d6f5a7264b4c37614c60a29881da0024a7a301f948bda6a755431fbfb6
+
+# API CLI to download the dataset
+kaggle datasets download -d tndt1902/uk-ppd-rre-epc-geo-details
+
+# API CLI to create the dataset (instruction: https://www.kaggle.com/product-feedback/52640)
+1. kaggle datasets init -p /Users/thanh/Documents/KAGGLE/UK_PRICEPAID_RESIDENTIAL_ENERGY_PERFORMANCE_CERTIFICATE/pricepaid_enriched_with_residential_epc  
+2. kaggle datasets create -p /Users/thanh/Documents/KAGGLE/UK_PRICEPAID_RESIDENTIAL_ENERGY_PERFORMANCE_CERTIFICATE/pricepaid_enriched_with_residential_epc
+
+# API CLI to update dataset
+1. (required if no meta_data file exists) kaggle datasets init -p /Users/thanh/Documents/KAGGLE/UK_PRICEPAID_RESIDENTIAL_ENERGY_PERFORMANCE_CERTIFICATE/pricepaid_enriched_with_residential_epc  
+2. Make sure the id field points to the dataset
+3. kaggle datasets version -p /Users/thanh/Documents/KAGGLE/UK_PRICEPAID_RESIDENTIAL_ENERGY_PERFORMANCE_CERTIFICATE/pricepaid_enriched_with_residential_epc
