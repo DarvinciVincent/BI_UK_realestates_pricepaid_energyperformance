@@ -148,6 +148,9 @@ def ETL_ppd_epc_mapping_keys(from_year: int=None, to_year: int=None):
                             """
     db_func.execute_sql_query(drop_duplicates_query, mydb)
 
+    db_func.disconnect_db(mydb)
+
+    
 def main(*args):
     logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S %Z')
